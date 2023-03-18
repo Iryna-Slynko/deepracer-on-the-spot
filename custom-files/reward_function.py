@@ -62,9 +62,8 @@ def reward_function(params):
     DIRECTION_THRESHOLD = 10.0
     if direction_diff > DIRECTION_THRESHOLD:
         reward *= 0.5
-
+'''
     if distance_from_center >= marker_4 and not all_wheels_on_track:
         reward = 1e-5
-    '''
 
     return float(reward)
