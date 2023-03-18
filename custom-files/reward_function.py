@@ -44,7 +44,8 @@ def reward_function(params):
         reward = reward + 1.0
     
     # Calculate the direction of the center line based on the closest waypoints
-    '''next_point = waypoints[closest_waypoints[1]]
+    '''
+    next_point = waypoints[closest_waypoints[1]]
     prev_point = waypoints[closest_waypoints[0]]
 
     # Calculate the direction in radius, arctan2(dy, dx), the result is (-pi, pi) in radians
@@ -63,6 +64,7 @@ def reward_function(params):
         reward *= 0.5
 
     if distance_from_center >= marker_4 and not all_wheels_on_track:
-        reward = 1e-5'''
+        reward = 1e-5
+    '''
 
     return float(reward)
