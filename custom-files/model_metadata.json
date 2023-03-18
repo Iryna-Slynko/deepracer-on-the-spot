@@ -29,8 +29,7 @@
             "speed": 2.6
         }
     ],
-    #"sensor": ["FRONT_FACING_CAMERA"],
-    
+       
     "sensor": ["LIDAR",
     "STEREO_CAMERAS"
     ],
