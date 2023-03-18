@@ -36,7 +36,7 @@ def reward_function(params):
         
     # Speed penalty threshold
 
-    reward = reward * (speed/ 2)
+    reward = reward * (speed/ 4)
 
     
     # Calculate the direction of the center line based on the closest waypoints
