@@ -10,24 +10,27 @@ def reward_function(params):
     all_wheels_on_track = params['all_wheels_on_track']
     speed = params['speed']
     SPEED_THRESHOLD = 1
+    FAST_SPEED_THRESHOLD = 3
 
     # Calculate 3 marks that are farther and father away from the center line
     marker_1 = 0.1 * track_width
     marker_2 = 0.25 * track_width
     marker_3 = 0.5 * track_width
-    marker_4 = 0.7 * track_width
+    marker_4 = 0.8 * track_width
 
     # Give higher reward if the car is closer to center line and vice versa
     if distance_from_center <= marker_1 and all_wheels_on_track:    
         reward = 1
     elif distance_from_center <= marker_2 and all_wheels_on_track:
-
-        reward = 0.5
+        reward = 0.7
     elif distance_from_center <= marker_3 and all_wheels_on_track:
-        reward = 0.1
-    else:
-        return float(1e-3)  # likely crashed/ close to off track
-
+        reward = 0.3
+    elif all_wheels_on_track:
+        reward = 0.1  # likely crashed/ close to off track
+    elif distance_from_center <= marker_4:
+        return float(1e-3)
+    else: # too far from the track
+        return float(1e-5)
     # Steering penality threshold, change the number based on your action space setting
     ABS_STEERING_THRESHOLD = 25
 
@@ -38,10 +41,12 @@ def reward_function(params):
     # Speed penalty threshold
     if speed < SPEED_THRESHOLD:
         # Penalty
-        reward = reward + 0.5
-    else:
+        reward = reward + 0.4
+    elif speed < FAST_SPEED_THRESHOLD:
         # High reward
         reward = reward + 1.0
+    else:
+        reward = reward + 2.0
 
     
     # Calculate the direction of the center line based on the closest waypoints
@@ -64,7 +69,6 @@ def reward_function(params):
     if direction_diff > DIRECTION_THRESHOLD:
         reward *= 0.5
 '''
-    if distance_from_center >= marker_4 and not all_wheels_on_track:
-        reward = 1e-5
+
 
     return float(reward)
