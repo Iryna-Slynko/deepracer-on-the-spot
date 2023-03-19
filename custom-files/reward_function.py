@@ -1,3 +1,4 @@
+import math
 def reward_function(params):
     '''
     Example of penalize steering, which helps mitigate zig-zag behaviors
@@ -11,6 +12,9 @@ def reward_function(params):
     speed = params['speed']
     SPEED_THRESHOLD = 1
     FAST_SPEED_THRESHOLD = 3
+    waypoints = params['waypoints']
+    closest_waypoints = params['closest_waypoints']
+    heading = params['heading']
 
     # Calculate 3 marks that are farther and father away from the center line
     marker_1 = 0.1 * track_width
@@ -48,9 +52,11 @@ def reward_function(params):
     else:
         reward = reward + 2.0
 
+    # Self-motivator: motivating the model to stay on track and get around in as few steps as possible
+    if params["all_wheels_on_track"] and params["steps"] > 0:
+        reward = ((params["progress"]/params["steps"])*100)+(params["speed"]**2)
     
     # Calculate the direction of the center line based on the closest waypoints
-    '''
     next_point = waypoints[closest_waypoints[1]]
     prev_point = waypoints[closest_waypoints[0]]
 
@@ -64,11 +70,9 @@ def reward_function(params):
     if direction_diff > 180:
         direction_diff = 360 - direction_diff
 
-    # Penalize the reward if the difference is too large
+    # Penalize if the difference between the track direction and the heading direction of the car is too large
     DIRECTION_THRESHOLD = 10.0
     if direction_diff > DIRECTION_THRESHOLD:
         reward *= 0.5
-'''
-
 
     return float(reward)
