@@ -1,4 +1,4 @@
-import math
+#import math
 def reward_function(params):
     '''
     Example of penalize steering, which helps mitigate zig-zag behaviors
@@ -12,9 +12,11 @@ def reward_function(params):
     speed = params['speed']
     SPEED_THRESHOLD = 1
     FAST_SPEED_THRESHOLD = 3
-    waypoints = params['waypoints']
+    '''waypoints = params['waypoints']
     closest_waypoints = params['closest_waypoints']
-    heading = params['heading']
+    heading = params['heading']'''
+    steps = params['steps']
+    progress = params["progress"]
 
     # Calculate 3 marks that are farther and father away from the center line
     marker_1 = 0.1 * track_width
@@ -23,7 +25,7 @@ def reward_function(params):
     marker_4 = 0.8 * track_width
 
     # Give higher reward if the car is closer to center line and vice versa
-    if distance_from_center <= marker_1 and all_wheels_on_track:    
+    if distance_from_center <= marker_1 and all_wheels_on_track:   
         reward = 1
     elif distance_from_center <= marker_2 and all_wheels_on_track:
         reward = 0.7
@@ -53,11 +55,11 @@ def reward_function(params):
         reward = reward + 2.0
 
     # Self-motivator: motivating the model to stay on track and get around in as few steps as possible
-    if params["all_wheels_on_track"] and params["steps"] > 0:
-        reward = ((params["progress"]/params["steps"])*100)+(params["speed"]**2)
+    if all_wheels_on_track and steps > 0:
+        reward = ((progress/steps)*100)+(speed**2)
     
     # Calculate the direction of the center line based on the closest waypoints
-    next_point = waypoints[closest_waypoints[1]]
+    '''next_point = waypoints[closest_waypoints[1]]
     prev_point = waypoints[closest_waypoints[0]]
 
     # Calculate the direction in radius, arctan2(dy, dx), the result is (-pi, pi) in radians
@@ -73,6 +75,6 @@ def reward_function(params):
     # Penalize if the difference between the track direction and the heading direction of the car is too large
     DIRECTION_THRESHOLD = 10.0
     if direction_diff > DIRECTION_THRESHOLD:
-        reward *= 0.5
+        reward *= 0.5'''
 
     return float(reward)
