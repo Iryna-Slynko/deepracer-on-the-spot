@@ -135,9 +135,9 @@ def reward_function(params):
 
     return float(reward)
 '''def reward_function(params):
-    '''
+    
     Example of penalize steering, which helps mitigate zig-zag behaviors
-    '''
+    
     
     # Read input parameters
     distance_from_center = params['distance_from_center']
@@ -147,9 +147,9 @@ def reward_function(params):
     speed = params['speed']
     SPEED_THRESHOLD = 1
     FAST_SPEED_THRESHOLD = 3
-    '''waypoints = params['waypoints']
+    waypoints = params['waypoints']
     closest_waypoints = params['closest_waypoints']
-    heading = params['heading']'''
+    heading = params['heading']
     steps = params['steps']
     progress = params["progress"]
 
